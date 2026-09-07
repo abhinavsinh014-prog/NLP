@@ -1,14 +1,23 @@
+import nltk
+from nltk.tokenize import sent_tokenize
+
 resume = {
     "name": "John Doe",
     "role": "Software Engineer",
     "skills": ["Python", "JavaScript", "React", "Django"],
-    "experience": [
-        {
-            "company": "ABC Corp",
-            "position": "Software Engineer",
-            "duration": "2 years"
-        }
-    ]
+    "experience": ["2 years"]
 }
 
-print(resume)
+text = f"""
+Name: {resume['name']}
+Role: {resume['role']}
+Skills: {', '.join(resume['skills'])}
+Experience: {resume['experience'][0]}
+"""
+
+doc = sent_tokenize(text)
+
+print(doc)
+
+
+
