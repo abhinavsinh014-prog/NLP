@@ -1,1 +1,2 @@
-print(3+5)
+sentence = "The quick brown fox jumps over the lazy dog."
+print(sentence)
