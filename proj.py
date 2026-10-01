@@ -23,5 +23,6 @@ def extract_text_from_pdf(pdf_path):
 
 text = extract_text_from_pdf("google cloud ecerti.pdf")
 
-print(text)
 
+set1 = set(text.split())
+print(set1)
