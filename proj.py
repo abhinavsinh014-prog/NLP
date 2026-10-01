@@ -76,3 +76,16 @@ job_skill_need = []
 for skill in job_skills:
     job_skill_need.append(skill)
 print(job_skill_need)
+
+resume_skills = extract_skills(text, skills)
+
+matched_skills = list(set(found_skills) & set(job_skill_need))
+missing_skills = list(set(job_skill_need) - set(found_skills))
+
+print("\nMatched skills:")
+for skill in matched_skills:
+    print(skill)
+
+print("\nMissing skills:")
+for skill in missing_skills:
+    print(skill)
