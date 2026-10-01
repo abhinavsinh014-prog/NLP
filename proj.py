@@ -62,3 +62,17 @@ def extract_skills(text, skills):
 found_skills = extract_skills(text, skills)
 print(found_skills)
 
+job_description = """
+We are looking for a Machine Learning Engineer.
+
+Required skills:
+Python, Machine Learning, Deep Learning, NLP,
+TensorFlow, Pandas, NumPy, SQL, Git and Docker.
+"""
+
+job_skills = extract_skills(job_description, skills)
+
+job_skill_need = []
+for skill in job_skills:
+    job_skill_need.append(skill)
+print(job_skill_need)
