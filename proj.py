@@ -89,3 +89,7 @@ for skill in matched_skills:
 print("\nMissing skills:")
 for skill in missing_skills:
     print(skill)
+
+match_score = (len(matched_skills) / len(job_skill_need)) * 100
+
+print(f"\nMatch Score: {match_score:.2f}%")
