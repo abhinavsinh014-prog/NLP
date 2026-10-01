@@ -25,4 +25,39 @@ text = extract_text_from_pdf("google cloud ecerti.pdf")
 
 
 set1 = set(text.split())
-print(set1)
+
+skills = [
+    "python",
+    "java",
+    "c++",
+    "sql",
+    "machine learning",
+    "deep learning",
+    "nlp",
+    "tensorflow",
+    "pytorch",
+    "scikit-learn",
+    "pandas",
+    "numpy",
+    "git",
+    "docker",
+    "aws",
+    "streamlit",
+    "opencv",
+    "word2vec"
+]
+
+def extract_skills(text, skills):
+
+    text = text.lower()
+
+    found_skills = []
+
+    for skill in skills:
+        if skill in text:
+            found_skills.append(skill)
+
+    return found_skills
+
+found_skills = extract_skills(text, skills)
+print(found_skills)
