@@ -5,13 +5,13 @@ import nltk as nltk
 # nltk.download('stopwords')
 import tensorflow as tf
 
-import fitz
+import pymupdf
 
 
 def extract_text_from_pdf(pdf_path):
     text = ""
 
-    pdf = fitz.open(pdf_path)
+    pdf = pymupdf.open(pdf_path)
 
     for page in pdf:
         text += page.get_text()
@@ -21,6 +21,6 @@ def extract_text_from_pdf(pdf_path):
     return text
 
 
-text = extract_text_from_pdf("resume.pdf")
+text = extract_text_from_pdf("google cloud ecerti.pdf")
 
 print(text)
