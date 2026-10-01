@@ -3,7 +3,7 @@ import numpy as np
 import nltk as nltk
 # nltk.download('punkt')
 # nltk.download('stopwords')
-import tensorflow as tf
+# import tensorflow as tf
 
 import pymupdf
 
@@ -24,3 +24,4 @@ def extract_text_from_pdf(pdf_path):
 text = extract_text_from_pdf("google cloud ecerti.pdf")
 
 print(text)
+
