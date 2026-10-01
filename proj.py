@@ -21,7 +21,7 @@ def extract_text_from_pdf(pdf_path):
     return text
 
 
-text = extract_text_from_pdf("google cloud ecerti.pdf")
+text = extract_text_from_pdf("New blank-Converted.pdf")
 
 
 set1 = set(text.split())
@@ -61,3 +61,4 @@ def extract_skills(text, skills):
 
 found_skills = extract_skills(text, skills)
 print(found_skills)
+
