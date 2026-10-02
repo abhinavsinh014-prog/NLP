@@ -94,3 +94,5 @@ match_score = (len(matched_skills) / len(job_skill_need)) * 100
 
 print(f"\nMatch Score: {match_score:.2f}%")
 
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
