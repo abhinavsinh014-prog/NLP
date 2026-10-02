@@ -60,7 +60,7 @@ def extract_skills(text, skills):
     return found_skills
 
 found_skills = extract_skills(text, skills)
-print(found_skills)
+# print(found_skills)
 
 job_description = """
 We are looking for a Machine Learning Engineer.
@@ -75,7 +75,7 @@ job_skills = extract_skills(job_description, skills)
 job_skill_need = []
 for skill in job_skills:
     job_skill_need.append(skill)
-print(job_skill_need)
+# print(job_skill_need)
 
 resume_skills = extract_skills(text, skills)
 
@@ -93,3 +93,4 @@ for skill in missing_skills:
 match_score = (len(matched_skills) / len(job_skill_need)) * 100
 
 print(f"\nMatch Score: {match_score:.2f}%")
+
