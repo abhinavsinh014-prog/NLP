@@ -110,4 +110,5 @@ similarity = cosine_similarity(
 
 match_score = similarity[0][0] * 100
 
-print(f"TF-IDF Match Score: {match_score:}%")
+print(f"TF-IDF Match Score: {match_score:.2f}%")
+
