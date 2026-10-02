@@ -1,12 +1,11 @@
 import pandas as pd
 import numpy as np
 import nltk as nltk
-# nltk.download('punkt')
-# nltk.download('stopwords')
+nltk.download('punkt')
+nltk.download('stopwords')
 # import tensorflow as tf
 
 import pymupdf
-
 
 def extract_text_from_pdf(pdf_path):
     text = ""
@@ -92,8 +91,6 @@ for skill in missing_skills:
 
 match_score = (len(matched_skills) / len(job_skill_need)) * 100
 
-print(f"\nMatch Score: {match_score:.2f}%")
-
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -109,6 +106,3 @@ similarity = cosine_similarity(
 )
 
 match_score = similarity[0][0] * 100
-
-print(f"TF-IDF Match Score: {match_score:.2f}%")
-
