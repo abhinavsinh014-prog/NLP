@@ -102,3 +102,12 @@ documents = [text, job_description]
 vectorizer = TfidfVectorizer()
 
 tfidf_matrix = vectorizer.fit_transform(documents)
+
+similarity = cosine_similarity(
+    tfidf_matrix[0:1],
+    tfidf_matrix[1:2]
+)
+
+match_score = similarity[0][0] * 100
+
+print(f"TF-IDF Match Score: {match_score:.2f}%")
