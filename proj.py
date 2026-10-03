@@ -109,6 +109,10 @@ match_score = similarity[0][0] * 100
 
 from gensim.models import Word2Vec
 
+import gensim.downloader as api
+
+wc = api.load('word2vec-google-news-300')
+
 resume_tokens = text.lower().split()
 job_tokens = job_description.lower().split()
 
@@ -117,7 +121,7 @@ sentences = [
     job_tokens
 ]   
 
-model = Word2Vec(
+model = wc(
     sentences=sentences,
     vector_size=100,
     window=5,
