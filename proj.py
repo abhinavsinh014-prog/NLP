@@ -1,8 +1,8 @@
 import pandas as pd
 import numpy as np
 import nltk as nltk
-nltk.download('punkt')
-nltk.download('stopwords')
+# nltk.download('punkt')
+# nltk.download('stopwords')
 # import tensorflow as tf
 
 import pymupdf
@@ -81,13 +81,13 @@ resume_skills = extract_skills(text, skills)
 matched_skills = list(set(found_skills) & set(job_skill_need))
 missing_skills = list(set(job_skill_need) - set(found_skills))
 
-print("\nMatched skills:")
-for skill in matched_skills:
-    print(skill)
+# print("\nMatched skills:")
+# for skill in matched_skills:
+#     print(skill)
 
-print("\nMissing skills:")
-for skill in missing_skills:
-    print(skill)
+# print("\nMissing skills:")
+# for skill in missing_skills:
+#     print(skill)
 
 match_score = (len(matched_skills) / len(job_skill_need)) * 100
 
@@ -124,3 +124,13 @@ model = Word2Vec(
     min_count=1,
     workers=4
 )
+print("Vocabulary:")
+print(model.wv.index_to_key)
+
+python_vector = model.wv["python"]
+
+print("Python vector:")
+print(python_vector)
+
+print("Vector shape:")
+print(python_vector.shape)
