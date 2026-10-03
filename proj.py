@@ -106,3 +106,5 @@ similarity = cosine_similarity(
 )
 
 match_score = similarity[0][0] * 100
+
+from gensim.models import Word2Vec
