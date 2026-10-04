@@ -131,10 +131,10 @@ sentences = [
 # print("Vocabulary:")
 # print(model.wv.index_to_key)
 
-# python_vector = model.wv["python"]
+python_vector = wc["python"]
 
-# print("Python vector:")
-# print(python_vector)
+print("Python vector:")
+print(python_vector)
 
 # print("Vector shape:")
 # print(python_vector.shape)
