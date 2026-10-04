@@ -131,12 +131,12 @@ def clean_text(text):
     text = re.sub(r"\s+", " ", text).strip()         # 5. collapse spaces
     return text
 
-print("Cleaned text:", clean_text(text))
-# def preprocess(text):
-#     text = clean_text(text)
-#     tokens = word_tokenize(text)                     # split into words
-#     tokens = [t for t in tokens if t not in STOP_WORDS and len(t) > 1]
-#     tokens = [lemmatizer.lemmatize(t) for t in tokens]
-#     return tokens
+def preprocess(text):
+    text = clean_text(text)
+    tokens = word_tokenize(text)                     # split into words
+    tokens = [t for t in tokens if t not in STOP_WORDS and len(t) > 1]
+    tokens = [lemmatizer.lemmatize(t) for t in tokens]
+    return tokens
 
-
+tokens = preprocess(text)
+print(tokens)
