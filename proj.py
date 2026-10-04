@@ -68,75 +68,75 @@ Required skills:
 Python, Machine Learning, Deep Learning, NLP,
 TensorFlow, Pandas, NumPy, SQL, Git and Docker.
 """
+def extract_skills(text, skills):
+    job_skills = extract_skills(job_description, skills)
 
-job_skills = extract_skills(job_description, skills)
+    job_skill_need = []
+    for skill in job_skills:
+        job_skill_need.append(skill)
+    # print(job_skill_need)
 
-job_skill_need = []
-for skill in job_skills:
-    job_skill_need.append(skill)
-# print(job_skill_need)
+    resume_skills = extract_skills(text, skills)
 
-resume_skills = extract_skills(text, skills)
+    matched_skills = list(set(found_skills) & set(job_skill_need))
+    missing_skills = list(set(job_skill_need) - set(found_skills))
 
-matched_skills = list(set(found_skills) & set(job_skill_need))
-missing_skills = list(set(job_skill_need) - set(found_skills))
+    # print("\nMatched skills:")
+    # for skill in matched_skills:
+    #     print(skill)
 
-# print("\nMatched skills:")
-# for skill in matched_skills:
-#     print(skill)
+    # print("\nMissing skills:")
+    # for skill in missing_skills:
+    #     print(skill)
 
-# print("\nMissing skills:")
-# for skill in missing_skills:
-#     print(skill)
-
-match_score = (len(matched_skills) / len(job_skill_need)) * 100
+    match_score = (len(matched_skills) / len(job_skill_need)) * 100
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-documents = [text, job_description]
+def calculate_match_score(text, job_description):
+    documents = [text, job_description]
 
-vectorizer = TfidfVectorizer()
+    vectorizer = TfidfVectorizer()
 
-tfidf_matrix = vectorizer.fit_transform(documents)
+    tfidf_matrix = vectorizer.fit_transform(documents)
 
-similarity = cosine_similarity(
-    tfidf_matrix[0:1],
-    tfidf_matrix[1:2]
-)
+    similarity = cosine_similarity(
+        tfidf_matrix[0:1],
+        tfidf_matrix[1:2]
+    )
 
-match_score = similarity[0][0] * 100
+    match_score = similarity[0][0] * 100
 
-from gensim.models import Word2Vec
+import re
+import nltk
+from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
+from nltk.tokenize import word_tokenize
 
-import gensim.downloader as api
+# nltk.download("punkt")
+# nltk.download("punkt_tab")
+# nltk.download("stopwords")
+# nltk.download("wordnet")
 
-wc = api.load('word2vec-google-news-300')
+STOP_WORDS = set(stopwords.words("english"))
+lemmatizer = WordNetLemmatizer()
 
-resume_tokens = text.lower().split()
-job_tokens = job_description.lower().split()
 
-sentences = [
-    resume_tokens,
-    job_tokens
-]   
+def clean_text(text):
+    text = text.lower()                              # 1. lowercase
+    text = re.sub(r"http\S+|www\S+", " ", text)      # 2. remove links
+    text = re.sub(r"\S+@\S+", " ", text)             # 3. remove emails
+    text = re.sub(r"[^a-z0-9+#.\s]", " ", text)      # 4. remove symbols
+    text = re.sub(r"\s+", " ", text).strip()         # 5. collapse spaces
+    return text
 
-# model = wc(
-#     sentences=sentences,
-#     vector_size=100,
-#     window=5,
-#     min_count=1,
-#     workers=4
-# )
-# print("Vocabulary:")
-# print(model.wv.index_to_key)
+print("Cleaned text:", clean_text(text))
+# def preprocess(text):
+#     text = clean_text(text)
+#     tokens = word_tokenize(text)                     # split into words
+#     tokens = [t for t in tokens if t not in STOP_WORDS and len(t) > 1]
+#     tokens = [lemmatizer.lemmatize(t) for t in tokens]
+#     return tokens
 
-# python_vector = wc["python"]
 
-# # print("Python vector:")
-# # print(python_vector)
-
-# print("Vector shape:")
-# print(python_vector.shape)
-
-wc.most_similar('ML')
