@@ -121,20 +121,20 @@ sentences = [
     job_tokens
 ]   
 
-model = wc(
-    sentences=sentences,
-    vector_size=100,
-    window=5,
-    min_count=1,
-    workers=4
-)
-print("Vocabulary:")
-print(model.wv.index_to_key)
+# model = wc(
+#     sentences=sentences,
+#     vector_size=100,
+#     window=5,
+#     min_count=1,
+#     workers=4
+# )
+# print("Vocabulary:")
+# print(model.wv.index_to_key)
 
-python_vector = model.wv["python"]
+# python_vector = model.wv["python"]
 
-print("Python vector:")
-print(python_vector)
+# print("Python vector:")
+# print(python_vector)
 
-print("Vector shape:")
-print(python_vector.shape)
+# print("Vector shape:")
+# print(python_vector.shape)
