@@ -23,90 +23,22 @@ def extract_text_from_pdf(pdf_path):
 text = extract_text_from_pdf("New blank-Converted.pdf")
 
 
-set1 = set(text.split())
+# from sklearn.feature_extraction.text import TfidfVectorizer
+# from sklearn.metrics.pairwise import cosine_similarity
 
-skills = [
-    "python",
-    "java",
-    "c++",
-    "sql",
-    "machine learning",
-    "deep learning",
-    "nlp",
-    "tensorflow",
-    "pytorch",
-    "scikit-learn",
-    "pandas",
-    "numpy",
-    "git",
-    "docker",
-    "aws",
-    "streamlit",
-    "opencv",
-    "word2vec"
-]
+# def calculate_match_score(text, job_description):
+#     documents = [text, job_description]
 
-def extract_skills(text, skills):
+#     vectorizer = TfidfVectorizer()
 
-    text = text.lower()
+#     tfidf_matrix = vectorizer.fit_transform(documents)
 
-    found_skills = []
+#     similarity = cosine_similarity(
+#         tfidf_matrix[0:1],
+#         tfidf_matrix[1:2]
+#     )
 
-    for skill in skills:
-        if skill in text:
-            found_skills.append(skill)
-
-    return found_skills
-
-found_skills = extract_skills(text, skills)
-# print(found_skills)
-
-job_description = """
-We are looking for a Machine Learning Engineer.
-
-Required skills:
-Python, Machine Learning, Deep Learning, NLP,
-TensorFlow, Pandas, NumPy, SQL, Git and Docker.
-"""
-def extract_skills(text, skills):
-    job_skills = extract_skills(job_description, skills)
-
-    job_skill_need = []
-    for skill in job_skills:
-        job_skill_need.append(skill)
-    # print(job_skill_need)
-
-    resume_skills = extract_skills(text, skills)
-
-    matched_skills = list(set(found_skills) & set(job_skill_need))
-    missing_skills = list(set(job_skill_need) - set(found_skills))
-
-    # print("\nMatched skills:")
-    # for skill in matched_skills:
-    #     print(skill)
-
-    # print("\nMissing skills:")
-    # for skill in missing_skills:
-    #     print(skill)
-
-    match_score = (len(matched_skills) / len(job_skill_need)) * 100
-
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
-
-def calculate_match_score(text, job_description):
-    documents = [text, job_description]
-
-    vectorizer = TfidfVectorizer()
-
-    tfidf_matrix = vectorizer.fit_transform(documents)
-
-    similarity = cosine_similarity(
-        tfidf_matrix[0:1],
-        tfidf_matrix[1:2]
-    )
-
-    match_score = similarity[0][0] * 100
+#     match_score = similarity[0][0] * 100
 
 import re
 import nltk
@@ -138,5 +70,57 @@ def preprocess(text):
     tokens = [lemmatizer.lemmatize(t) for t in tokens]
     return tokens
 
-tokens = preprocess(text)
-print(tokens)
+
+
+import re
+
+SKILLS = {
+    "python": ["python"],
+    "java": ["java"],
+    "c++": ["c++"],
+    "sql": ["sql", "mysql", "postgresql"],
+    "machine learning": ["machine learning", "ml"],
+    "deep learning": ["deep learning", "neural network", "neural networks"],
+    "nlp": ["nlp", "natural language processing"],
+    "tensorflow": ["tensorflow"],
+    "pytorch": ["pytorch"],
+    "scikit-learn": ["scikit-learn", "scikit learn", "sklearn"],
+    "pandas": ["pandas"],
+    "numpy": ["numpy"],
+    "git": ["git", "github"],
+    "docker": ["docker"],
+    "aws": ["aws", "amazon web services"],
+    "streamlit": ["streamlit"],
+    "opencv": ["opencv"],
+    "word2vec": ["word2vec"],
+}
+
+
+def extract_skills(text, skills=SKILLS):
+    """Return the set of canonical skill names found in `text`."""
+    text = text.lower()
+    found = set()
+
+    for skill, aliases in skills.items():
+        for alias in aliases:
+            pattern = r"(?<!\w)" + re.escape(alias) + r"(?!\w)"
+            if re.search(pattern, text):
+                found.add(skill)
+                break
+    return found
+
+
+def compare_skills(resume_text, job_text):
+    resume_skills = extract_skills(resume_text)
+    job_skills = extract_skills(job_text)
+
+    matched = resume_skills & job_skills
+    missing = job_skills - resume_skills
+    extra = resume_skills - job_skills
+
+    score = len(matched) / len(job_skills) * 100 if job_skills else 0.0
+    result = f"Matched skills: {sorted(matched)}\nMissing skills: {sorted(missing)}\nExtra skills: {sorted(extra)}\nMatch score: {round(score, 1)}%"
+    return result
+
+compare = compare_skills(text, "We are looking for a Python developer with experience in machine learning, deep learning, and NLP. Familiarity with TensorFlow and PyTorch is a plus. Knowledge of SQL and Git is required.")
+print(compare)
