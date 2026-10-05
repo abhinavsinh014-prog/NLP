@@ -1,10 +1,5 @@
 import pandas as pd
 import numpy as np
-import nltk as nltk
-# nltk.download('punkt')
-# nltk.download('stopwords')
-# import tensorflow as tf
-
 import pymupdf
 
 def extract_text_from_pdf(pdf_path):
@@ -21,24 +16,6 @@ def extract_text_from_pdf(pdf_path):
 
 
 text = extract_text_from_pdf("New blank-Converted.pdf")
-
-
-# from sklearn.feature_extraction.text import TfidfVectorizer
-# from sklearn.metrics.pairwise import cosine_similarity
-
-# def calculate_match_score(text, job_description):
-#     documents = [text, job_description]
-
-#     vectorizer = TfidfVectorizer()
-
-#     tfidf_matrix = vectorizer.fit_transform(documents)
-
-#     similarity = cosine_similarity(
-#         tfidf_matrix[0:1],
-#         tfidf_matrix[1:2]
-#     )
-
-#     match_score = similarity[0][0] * 100
 
 import re
 import nltk
@@ -122,5 +99,9 @@ def compare_skills(resume_text, job_text):
     result = f"Matched skills: {sorted(matched)}\nMissing skills: {sorted(missing)}\nExtra skills: {sorted(extra)}\nMatch score: {round(score, 1)}%"
     return result
 
-compare = compare_skills(text, "We are looking for a Python developer with experience in machine learning, deep learning, and NLP. Familiarity with TensorFlow and PyTorch is a plus. Knowledge of SQL and Git is required.")
-print(compare)
+
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
+
+
