@@ -86,6 +86,11 @@ def extract_skills(text, skills=SKILLS):
                 break
     return found
 
+job_description = """
+We are looking for a Machine Learning Engineer.
+Required skills: Python, Machine Learning, Deep Learning, NLP,
+TensorFlow, Pandas, NumPy, SQL, Git and Docker.
+"""
 
 def compare_skills(resume_text, job_text):
     resume_skills = extract_skills(resume_text)
@@ -135,3 +140,5 @@ def job_keywords(job_text, resume_text, top_n=10):
     gaps.sort(key=lambda x: x[1], reverse=True)
     return [term for term, _ in gaps[:top_n]]
 
+score = tfidf_score(text, job_description)
+print(f"TF-IDF similarity score: {score}%")
