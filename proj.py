@@ -139,3 +139,6 @@ def job_keywords(job_text, resume_text, top_n=10):
     ]
     gaps.sort(key=lambda x: x[1], reverse=True)
     return [term for term, _ in gaps[:top_n]]
+
+pj = job_keywords(text, job_description, top_n=10)
+print(pj)
