@@ -183,3 +183,5 @@ def semantic_score(resume_text, job_text):
                 round(best.values[i].item(), 2))
             for i in range(len(job_chunks))
         ]
+    score = best.values.mean().item() * 100
+    return round(score, 1), details 
