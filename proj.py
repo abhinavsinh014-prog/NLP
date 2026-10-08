@@ -177,4 +177,9 @@ def semantic_score(resume_text, job_text):
     sims = util.cos_sim(job_emb, resume_emb)      # shape: (job, resume)
     best = sims.max(dim=1)                        # best resume match per job chunk
 
-    
+    details = [
+            (job_chunks[i],
+                resume_chunks[best.indices[i].item()],
+                round(best.values[i].item(), 2))
+            for i in range(len(job_chunks))
+        ]
