@@ -153,3 +153,35 @@ def get_model():
     return _model
 
 
+def split_into_chunks(text, min_words=3):
+    """Split text into sentence-sized pieces (lines, sentences, bullets)."""
+    pieces = re.split(r"[\n.•●▪]+", text)
+    return [p.strip() for p in pieces if len(p.split()) >= min_words]
+
+
+def semantic_score(resume_text, job_text):
+    """
+    For each job requirement, find the most similar part of the resume.
+    Return the average of those best matches (0-100) plus the details.
+    """
+    model = get_model()
+    resume_chunks = split_into_chunks(resume_text)
+    job_chunks = split_into_chunks(job_text)
+
+    if not resume_chunks or not job_chunks:
+        return 0.0, []
+
+    resume_emb = model.encode(resume_chunks, convert_to_tensor=True)
+    job_emb = model.encode(job_chunks, convert_to_tensor=True)
+
+    sims = util.cos_sim(job_emb, resume_emb)      # shape: (job, resume)
+    best = sims.max(dim=1)                        # best resume match per job chunk
+
+    details = [
+            (job_chunks[i],
+                resume_chunks[best.indices[i].item()],
+                round(best.values[i].item(), 2))
+            for i in range(len(job_chunks))
+        ]
+    score = best.values.mean().item() * 100
+    return round(score, 1), details 
