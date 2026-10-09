@@ -120,3 +120,22 @@ def tfidf_score(resume_text, job_text):
     return round(similarity * 100, 1)
 
 
+def job_keywords(job_text, resume_text, top_n=10):
+    """Highest-weighted job terms that do NOT appear in the resume."""
+    resume_clean = " ".join(preprocess(resume_text))
+    job_clean = " ".join(preprocess(job_text))
+
+    vectorizer = TfidfVectorizer(ngram_range=(1, 2))
+    matrix = vectorizer.fit_transform([resume_clean, job_clean])
+
+    terms = vectorizer.get_feature_names_out()
+    job_weights = matrix[1].toarray()[0]
+    resume_weights = matrix[0].toarray()[0]
+
+    gaps = [
+        (terms[i], job_weights[i])
+        for i in range(len(terms))
+        if job_weights[i] > 0 and resume_weights[i] == 0
+    ]
+    gaps.sort(key=lambda x: x[1], reverse=True)
+    return [term for term, _ in gaps[:top_n]]
