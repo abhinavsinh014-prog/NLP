@@ -119,3 +119,4 @@ def tfidf_score(resume_text, job_text):
     similarity = cosine_similarity(matrix[0], matrix[1])[0][0]
     return round(similarity * 100, 1)
 
+
