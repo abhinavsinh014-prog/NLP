@@ -73,3 +73,38 @@ SKILLS = {
 }
 
 
+def extract_skills(text, skills=SKILLS):
+    """Return the set of canonical skill names found in `text`."""
+    text = text.lower()
+    found = set()
+
+    for skill, aliases in skills.items():
+        for alias in aliases:
+            pattern = r"(?<!\w)" + re.escape(alias) + r"(?!\w)"
+            if re.search(pattern, text):
+                found.add(skill)
+                break
+    return found
+
+job_description = """
+We are looking for a Machine Learning Engineer.
+Required skills: Python, Machine Learning, Deep Learning, NLP,
+TensorFlow, Pandas, NumPy, SQL, Git and Docker.
+"""
+
+def compare_skills(resume_text, job_text):
+    resume_skills = extract_skills(resume_text)
+    job_skills = extract_skills(job_text)
+
+    matched = resume_skills & job_skills
+    missing = job_skills - resume_skills
+    extra = resume_skills - job_skills
+
+    score = len(matched) / len(job_skills) * 100 if job_skills else 0.0
+    result = f"Matched skills: {sorted(matched)}\nMissing skills: {sorted(missing)}\nExtra skills: {sorted(extra)}\nMatch score: {round(score, 1)}%"
+    return result
+
+
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
