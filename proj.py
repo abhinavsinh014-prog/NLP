@@ -108,3 +108,14 @@ def compare_skills(resume_text, job_text):
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
+def tfidf_score(resume_text, job_text):
+    """Return similarity (0-100) between resume and job description."""
+    resume_clean = " ".join(preprocess(resume_text))
+    job_clean = " ".join(preprocess(job_text))
+
+    vectorizer = TfidfVectorizer(ngram_range=(1, 2))
+    matrix = vectorizer.fit_transform([resume_clean, job_clean])
+
+    similarity = cosine_similarity(matrix[0], matrix[1])[0][0]
+    return round(similarity * 100, 1)
+
