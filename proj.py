@@ -139,3 +139,17 @@ def job_keywords(job_text, resume_text, top_n=10):
     ]
     gaps.sort(key=lambda x: x[1], reverse=True)
     return [term for term, _ in gaps[:top_n]]
+
+import re
+from sentence_transformers import SentenceTransformer, util
+
+_model = None
+
+def get_model():
+    """Load the model once and reuse it (loading is slow)."""
+    global _model
+    if _model is None:
+        _model = SentenceTransformer("all-MiniLM-L6-v2")
+    return _model
+
+
